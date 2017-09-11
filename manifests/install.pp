@@ -63,11 +63,20 @@ class sentry::install (
 
   # Install any extensions we might have been given. We install these
   # *after* Sentry to ensure the correct version of Sentry is installed
-  validate_hash($extensions)
-  $extensions.each |String $extension, String $url| {
-    python::pip { $extension:
-      url     => $url,
-      require => Python::Pip['sentry'],
+  if $extensions =~ Hash {
+    validate_hash($extensions)
+    $extensions.each |String $extension, String $url| {
+      python::pip { $extension:
+        url     => $url,
+        require => Python::Pip['sentry'],
+      }
+    }
+  } else {
+    validate_array($extensions)
+    $extensions.each |String $extension| {
+      python::pip { $extension:
+        require => Python::Pip['sentry'],
+      }
     }
   }
 
