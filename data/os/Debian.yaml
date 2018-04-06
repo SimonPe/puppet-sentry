@@ -1,0 +1,11 @@
+sentry::setup::system_dependencies:
+  - build-essential
+  - libffi-dev
+  - libjpeg62-turbo-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libldap2-dev
+  - libssl-dev
+  - zlib1g-dev
+  - libsasl2-dev
+  - libpq-dev

@@ -17,6 +17,7 @@
 # Copyright 2016 CoverMyMeds
 #
 class sentry::setup (
+  $system_dependencies,
   $group             = $sentry::group,
   $path              = $sentry::path,
   $user              = $sentry::user,
@@ -43,36 +44,7 @@ class sentry::setup (
     require => User[$user],
   }
 
-  case $::osfamily {
-    'Debian': {
-      ensure_packages([
-        'build-essential',
-        'libffi-dev',
-        'libjpeg62-turbo-dev',
-        'libxml2-dev',
-        'libxslt1-dev',
-        'libldap2-dev',
-        'libssl-dev',
-        'zlib1g-dev',
-        'libsasl2-dev',
-        'libpq-dev',
-      ])
-    }
-    'RedHat': {
-      ensure_packages([
-        'libffi-devel',
-        'libjpeg-turbo-devel',
-        'libxml2-devel',
-        'libxslt-devel',
-        'openldap-devel',
-        'openssl-devel',
-        'zlib-devel',
-      ])
-    }
-    default: {
-      fail('unsupported OS')
-    }
-  }
+  ensure_packages($system_dependencies)
 
   python::virtualenv { $path:
     ensure  => present,
