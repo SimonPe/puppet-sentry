@@ -5,6 +5,12 @@ puppet-sentry
 
 **NOTE** version 3 of this module only supports Sentry versions 8.4.0 and above.
 
+## About this fork
+
+This module was originally developed by CoverMyMeds, due to inactivity of the upstream wrt pull requests this repository is now maintained by SimonPe.
+
+If the improvements in this repository get merged back into the original upstream I might drop this module in favor of the original.
+
 ## Dependencies
 This module supports only Red Hat Enterprise Linux 7 and its derivatives.
 

@@ -1,12 +1,12 @@
 {
-  "name": "covermymeds-sentry",
+  "name": "simonpe-sentry",
   "version": "3.0.0",
-  "author": "CoverMyMeds",
+  "author": "SimonPe",
   "license": "MIT",
   "summary": "Install and configure Sentry",
-  "source": "https://github.com/covermymeds/puppet-sentry",
-  "project_page": "https://github.com/covermymeds//puppet-sentry",
-  "issues_url": "https://github.com/covermymeds/puppet-sentry/issues",
+  "source": "https://github.com/SimonPe/puppet-sentry",
+  "project_page": "https://github.com/SimonPe//puppet-sentry",
+  "issues_url": "https://github.com/SimonPe/puppet-sentry/issues",
   "tags": ["sentry", "getsentry"],
   "operatingsystem_support": [
     { "operatingsystem":"RedHat", "operatingsystemrelease":[ "7" ] },
