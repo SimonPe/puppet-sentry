@@ -84,10 +84,13 @@ class sentry::install (
     # this exec will handle creating a new database, as well as upgrading
     # an existing database.  The `creates` parameter is version-specific,
     # so this should run automatically on version upgrades.
+    # The initial bootstrap migrations can take a while, especially on underpowered dev machines.
+    # Disable the timeout so we don't fail.
     exec { 'sentry-database-install':
       command => "${path}/bin/sentry --config=${path} upgrade --noinput > ${path}/install-${version}.log 2>&1 && touch ${path}/install-${version}.success",
       creates => "${path}/install-${version}.success",
       path    => "${path}/bin:/bin:/usr/bin",
+      timeout => 0,
       user    => $user,
       group   => $group,
       cwd     => $path,

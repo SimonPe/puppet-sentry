@@ -1,6 +1,11 @@
 require 'spec_helper_acceptance'
 
 describe 'the sentry module' do
+  context 'waiting for db connection' do
+    it 'should connect to the db' do
+      on :mysql, 'while ! mysql -u sentry -psentry -e ""&> /dev/null; do sleep 1; echo -n .; done'
+    end
+  end
   context 'a basic setup' do
     pp = <<-EOS
     class { 'python':
