@@ -136,6 +136,12 @@ class sentry (
   Class['::sentry::service'] ~>
   Class['::sentry::wsgi']
 
+  # restart apache on any change
+  Class['::sentry::setup'] ~> Class['::apache::service']
+  Class['::sentry::config'] ~> Class['::apache::service']
+  Class['::sentry::install'] ~> Class['::apache::service']
+  Class['::sentry::wsgi'] ~> Class['::apache::service']
+
   # Write out a list of "team/project dsn" values to a file.
   # Apache will serve this list and Puppet will consume to set
   # custom facts for each app installed on a server
