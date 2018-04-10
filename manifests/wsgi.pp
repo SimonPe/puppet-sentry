@@ -98,7 +98,7 @@ class sentry::wsgi (
     ssl_cert                    => $ssl_cert,
     ssl_key                     => $ssl_key,
     wsgi_daemon_process         => 'wsgi_sentry',
-    wsgi_daemon_process_options => $wsgi_options_hash,
+    wsgi_daemon_process_options => delete_undef_values($wsgi_options_hash),
     wsgi_pass_authorization     => 'On',
     wsgi_process_group          => 'wsgi_sentry',
     wsgi_script_aliases         => { '/' => "${path}/app_init.wsgi", },
