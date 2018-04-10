@@ -37,6 +37,8 @@ GEM
     beaker-hostgenerator (1.1.9)
       deep_merge (~> 1.0)
       stringify-hash (~> 0.0.0)
+    beaker-module_install_helper (0.1.7)
+      beaker (>= 2.0)
     beaker-puppet_install_helper (0.7.1)
       beaker (>= 2.0)
     beaker-rspec (6.2.3)
@@ -472,6 +474,7 @@ PLATFORMS
 
 DEPENDENCIES
   beaker (~> 3.13.0)
+  beaker-module_install_helper
   beaker-puppet_install_helper
   beaker-rspec
   guard-rake

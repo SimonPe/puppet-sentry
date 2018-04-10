@@ -1,0 +1,38 @@
+---
+HOSTS:
+  centos7.sentry.example.org:
+    platform: el-7-x86_64
+    hypervisor: docker
+    image: centos:7
+    roles:
+      - default
+      - puppetised
+    docker_preserve_image: true
+    docker_cmd: '["/usr/sbin/init"]'
+    docker_container_name: centos7.sentry.example.org
+    # fix some things so our container behaves
+    docker_image_commands:
+      - 'yum install -y crontabs initscripts iproute openssl sysvinit-tools tar wget which ss'
+      - 'systemctl mask getty@tty1.service'
+      - 'mkdir -p /etc/systemd/system/systemd-udev-trigger.service.d && echo -e "[Service]\nExecStart=\nExecStart=/bin/true" > /etc/systemd/system/systemd-udev-trigger.service.d/neuter.conf'
+  mysql.sentry.example.org:
+    platform: debian-9-amd64
+    hypervisor:  docker
+    roles:
+      - mysql
+    dockerfile: spec/acceptance/dockerfiles/mysql.Dockerfile
+    docker_preserve_image: true
+    docker_container_name: mysql.sentry.example.org
+  redis.sentry.example.org:
+    platform: debian-9-amd64
+    hypervisor:  docker
+    roles:
+      - redis
+    dockerfile: spec/acceptance/dockerfiles/redis.Dockerfile
+    docker_preserve_image: true
+    docker_container_name: redis.sentry.example.org
+CONFIG:
+  trace_limit: 200
+  masterless: true
+...
+# vim: syntax=yaml
