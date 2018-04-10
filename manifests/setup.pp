@@ -18,9 +18,11 @@
 #
 class sentry::setup (
   $system_dependencies,
+  $db_dependencies   = {},
   $group             = $sentry::group,
   $path              = $sentry::path,
   $user              = $sentry::user,
+  String $db_engine  = $sentry::db_engine,
 ) {
   assert_private()
 
@@ -45,6 +47,9 @@ class sentry::setup (
   }
 
   ensure_packages($system_dependencies)
+  if $db_dependencies[$db_engine] {
+    ensure_packages($db_dependencies[$db_engine])
+  }
 
   python::virtualenv { $path:
     ensure  => present,
@@ -62,12 +67,17 @@ class sentry::setup (
     'django-auth-ldap',
     'hiredis',
     'nydus',
-    'psycopg2',
     'python-memcached',
     'python-ldap',
     'redis',
   ]
+  $pip_db_dependencies = $db_engine ? {
+    'mysql' => 'mysqlclient',
+    'pgsql' => 'psycopg2',
+    default => [],
+  }
 
   python::pip { $pip_dependencies: }
+  python::pip { $pip_db_dependencies: }
 
 }

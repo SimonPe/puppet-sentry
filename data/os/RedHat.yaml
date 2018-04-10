@@ -6,3 +6,12 @@ sentry::setup::system_dependencies:
   - openldap-devel
   - openssl-devel
   - zlib-devel
+  - postgresql-devel
+  - gcc
+  - gcc-c++
+
+sentry::setup::db_dependencies:
+  pgsql:
+    - postgresql-devel
+  mysql:
+    - mysql-devel
