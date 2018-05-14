@@ -41,6 +41,7 @@
 # @param metrics_enable whether to enable the sentry metrics (false)
 # @param metrics_backend which metrics backend to enable (statsd)
 # @param organization default organization to create, and in which to create new users
+# @param team default team to create, and in which to create new users or projects
 # @param path path into which to install Sentry, and create the virtualenv (/srv/sentry)
 # @param project Default project name
 # @param redis_host name or IP of Redis server (localhost)
@@ -91,6 +92,7 @@ class sentry (
   Boolean         $metrics_enable   = $sentry::params::metrics_enable,
   Enum['statsd']  $metrics_backend  = $sentry::params::metrics_backend,
   $organization                     = $sentry::params::organization,
+  $team                             = $sentry::params::team,
   $path                             = $sentry::params::path,
   $project                          = $sentry::params::project,
   $redis_host                       = $sentry::params::redis_host,

@@ -33,7 +33,10 @@ om = OrganizationMember.objects.create(
   user=u,
 )
 
-t = o.team_set.create(name=o.name)
+t = Team()
+t.name = <%= @team %>
+t.organization = o
+t.save()
 OrganizationMemberTeam.objects.create(
   team=t,
   organizationmember=om,
@@ -52,7 +55,7 @@ p.save()
 log = open('<%= @path %>/bootstrap.log', 'a')
 log.write('Sentry version <%= @version %> bootstrap...')
 log.write('Organization <%= @organization %> created.')
-log.write('Team <%= @organization %> created.')
+log.write('Team <%= @team %> created.')
 log.write('Project <%= @project %> created.')
 log.close()
 
