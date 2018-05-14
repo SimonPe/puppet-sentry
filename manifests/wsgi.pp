@@ -81,6 +81,10 @@ class sentry::wsgi (
   } else {
     $aliases = undef
   }
+  $port = $ssl ? {
+    true    => '443',
+    default => '80',
+  }
 
   #lint:ignore:arrow_alignment
   apache::vhost { 'sentry':
@@ -90,7 +94,7 @@ class sentry::wsgi (
     docroot                     => $path,
     error_log_file              => 'sentry-e.log',
     manage_docroot              => false,
-    port                        => '443',
+    port                        => $port,
     servername                  => $vhost,
     ssl                         => $ssl,
     ssl_ca                      => $ssl_ca,
@@ -102,6 +106,24 @@ class sentry::wsgi (
     wsgi_pass_authorization     => 'On',
     wsgi_process_group          => 'wsgi_sentry',
     wsgi_script_aliases         => { '/' => "${path}/app_init.wsgi", },
+  }
+  if $ssl {
+    apache::vhost { 'sentry_rewrite':
+      access_log_file   => 'sentry_rewrite.log',
+      access_log_format => 'combined',
+      docroot           => $path,
+      error_log_file    => 'sentry_rewrite-e.log',
+      manage_docroot    => false,
+      port              => '80',
+      servername        => $vhost,
+      rewrites          => [
+        {
+          comment      => 'Redirect to https',
+          rewrite_cond => [ '%{HTTPS} off' ],
+          rewrite_rule => [ '(.*) https://%{SERVER_NAME}/$1 [R,L]' ],
+        },
+      ],
+    }
   }
   #lint:endignore
 
