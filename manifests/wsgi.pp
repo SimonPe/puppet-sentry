@@ -18,6 +18,7 @@
 # @param path the virtualenv path for your Sentry installation
 # @param publish_dsns whether or not to make each Sentry application's DSN accessible via http(s)
 # @param ssl whether or not to enable SSL support
+# @param ssl_redirect whether or not to enable https redirect
 # @param ssl_ca the SSL CA file to use
 # @param ssl_chain the SSL chain file to use
 # @param ssl_cert the SSL public certificate to use
@@ -30,6 +31,7 @@ class sentry::wsgi (
   $path                   = $sentry::path,
   $publish_dsns           = true,
   $ssl                    = true,
+  $ssl_redirect           = true,
   $ssl_ca                 = $sentry::ssl_ca,
   $ssl_chain              = $sentry::ssl_chain,
   $ssl_cert               = $sentry::ssl_cert,
@@ -107,7 +109,7 @@ class sentry::wsgi (
     wsgi_process_group          => 'wsgi_sentry',
     wsgi_script_aliases         => { '/' => "${path}/app_init.wsgi", },
   }
-  if $ssl {
+  if $ssl and $ssl_redirect {
     apache::vhost { 'sentry_rewrite':
       access_log_file   => 'sentry_rewrite.log',
       access_log_format => 'combined',
