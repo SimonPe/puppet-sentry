@@ -28,6 +28,7 @@ class sentry::params {
   $metrics_enable     = false
   $metrics_backend    = 'statsd'
   $organization       = 'Default'
+  $team               = 'Default'
   $path               = '/srv/sentry'
   $project            = 'Default'
   $redis_host         = 'localhost'

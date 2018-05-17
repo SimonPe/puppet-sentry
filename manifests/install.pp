@@ -20,6 +20,7 @@
 # @param group UNIX group to own Sentry files
 # @param ldap_auth_version version of the sentry-ldap-auth plugin to install
 # @param organization default Sentry organization to create
+# @param team default Sentry team to create
 # @param path path into which to create virtualenv and install Sentry
 # @param project initial Sentry project to create
 # @param url URL from which to install Sentry
@@ -34,6 +35,7 @@ class sentry::install (
   $group             = $sentry::group,
   $ldap_auth_version = $sentry::ldap_auth_version,
   $organization      = $sentry::organization,
+  $team              = $sentry::team,
   $path              = $sentry::path,
   $project           = $sentry::project,
   $url               = $sentry::url,
